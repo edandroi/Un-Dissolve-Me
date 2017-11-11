@@ -16,6 +16,8 @@ public class ButtonAnimations : MonoBehaviour
 
 	float stoppingPoint;
 	bool lastClickedForward;
+	private int currentActiveForwardIndex;
+	private int currentActiveBackwardIndex;
 
 	// Use this for initialization
 	void Start () {
@@ -27,6 +29,8 @@ public class ButtonAnimations : MonoBehaviour
 		anim.Play("Forward",0,0.6f); //play the state called 'Forward', but start at the halfway point
 		stoppingPoint = 0.5f; //point in clip between 0 and 1 (1 is the end)
 		anim.speed = 0;
+		currentActiveForwardIndex = 0;
+		currentActiveBackwardIndex = 0;
 
 		buttonHolders = new Transform[2] {
 			forwardScripts [0].transform.parent,
@@ -81,13 +85,15 @@ public class ButtonAnimations : MonoBehaviour
 				forwardScripts[i].isClicked = false; //so this only runs once for every click
 
 
-				forwardScripts [i].gameObject.SetActive (false); //turn this one off
-				int nextIndex = i+1;
-				//u,nextIndex = Random.Range (0, forwardScripts.Length);
-				if (nextIndex >= forwardScripts.Length) {
-					nextIndex = 0; //loop around
-				}
-				forwardScripts[nextIndex].gameObject.SetActive(true);
+//				forwardScripts [i].gameObject.SetActive (false); //turn this one off
+//				int nextIndex = i+1;
+//				//u,nextIndex = Random.Range (0, forwardScripts.Length);
+//				if (nextIndex >= forwardScripts.Length) {
+//					nextIndex = 0; //loop around
+//				}
+//				forwardScripts[nextIndex].gameObject.SetActive(true);
+//				currentActiveForwardIndex = nextIndex;
+				ShiftButtons();
 				RandomizePositions ();
 			}
 
@@ -113,12 +119,14 @@ public class ButtonAnimations : MonoBehaviour
 				stoppingPoint = Mathf.Clamp01(stoppingPoint);
 				backwardScripts[i].isClicked = false; //so this only runs once for every click
 
-				backwardScripts [i].gameObject.SetActive (false); //turn this one off
-				int nextIndex = i+1;
-				if (nextIndex >= backwardScripts.Length) {
-					nextIndex = 0; //loop around
-				}
-				backwardScripts[nextIndex].gameObject.SetActive(true);
+//				backwardScripts [i].gameObject.SetActive (false); //turn this one off
+//				int nextIndex = i+1;
+//				if (nextIndex >= backwardScripts.Length) {
+//					nextIndex = 0; //loop around
+//				}
+//				backwardScripts[nextIndex].gameObject.SetActive(true);
+//				currentActiveBackwardIndex = nextIndex;
+				ShiftButtons();
 				RandomizePositions ();
 			}
 		}
@@ -151,5 +159,16 @@ public class ButtonAnimations : MonoBehaviour
 
 	void EndGameForward(){
 		SceneManager.LoadScene ("EndScreen Forward");
+	}
+
+	void ShiftButtons(){
+		forwardScripts [currentActiveForwardIndex].gameObject.SetActive (false);
+		backwardScripts [currentActiveBackwardIndex].gameObject.SetActive (false);
+
+		currentActiveForwardIndex = (currentActiveForwardIndex + 1) % forwardScripts.Length;
+		currentActiveBackwardIndex = (currentActiveBackwardIndex + 1) % backwardScripts.Length;
+
+		forwardScripts [currentActiveForwardIndex].gameObject.SetActive (true);
+		backwardScripts [currentActiveBackwardIndex].gameObject.SetActive (true);
 	}
 }
