@@ -11,3 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Game_10Nov.unity
     guid: 21b80e20e5a2c41a29f9321db243f309
+  - enabled: 1
+    path: Assets/EndScreen Forward.unity
+    guid: be2609b399dfa408390f3032244e066f
