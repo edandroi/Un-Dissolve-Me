@@ -72,13 +72,13 @@ public class ButtonAnimations : MonoBehaviour
 				if (lastClickedForward == false) { //if until now we were playing backwards
 					stoppingPoint = 1.0f - stoppingPoint; //mirror for reverse state
 				}
-				anim.speed = 0.40f; //play back at half speed
+				anim.speed = 0.99f; //play back at half speed
 
 				anim.Play ("Forward", 0, stoppingPoint); //start playing at the mirrored stopping point
 				anim.Update(0); //we want the animator to notice we changed the state
 
 				lastClickedForward = true;
-				stoppingPoint += 0.12f; //stop at 1/4 of the time of the animation
+				stoppingPoint += 0.08f; //stop at 1/4 of the time of the animation
 				//todo: make sure this doesn't go above 1.0
 				stoppingPoint = Mathf.Clamp01(stoppingPoint);
 
@@ -107,14 +107,14 @@ public class ButtonAnimations : MonoBehaviour
 
 					stoppingPoint = 1.0f - stoppingPoint; //mirror for reverse state
 				}
-				anim.speed = 0.40f; //play back at half speed
+				anim.speed = 0.99f; //play back at half speed
 
 				anim.Play ("Backward",0,stoppingPoint); //start playing at the mirrored stopping point
 				anim.Update(0);//we want the animator to notice we changed the state
 
 
 				lastClickedForward = false;
-				stoppingPoint += 0.12f; //stop at 1/4 of the time of the animation
+				stoppingPoint += 0.08f; //stop at 1/4 of the time of the animation
 				//todo: make sure this doesn't go below zero
 				stoppingPoint = Mathf.Clamp01(stoppingPoint);
 				backwardScripts[i].isClicked = false; //so this only runs once for every click
